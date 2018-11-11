@@ -6,18 +6,17 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedDish: null
+            selectedDish: null,
+            selectedComments: []
         }
     }
 
     onDishSelect(dish) {
-      console.log('In onDishSelect, dish is: ' + dish);
+      //console.log('***In onDishSelect, comments is: ' + dish.comments.comment );
       this.setState({ selectedDish: dish});
     }
 
     render() {
-        const element = this.state.selectedDish;
-        console.log('In render, dish is: ' + element);
         const menu = this.props.dishes.map((dish) => {
             return (
               <div key={dish.id} className="col-12 col-md-5 m-1">
@@ -37,6 +36,7 @@ class Menu extends Component {
                   {menu}
             </div>
             <DishDetail selectedDish={this.state.selectedDish}/>
+            
           </div>
         );
     }
