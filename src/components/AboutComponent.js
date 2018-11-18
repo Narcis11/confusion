@@ -1,6 +1,7 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Leaders from './RenderLeader';
 
 function About(props) {
 
@@ -66,7 +67,7 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                        <Leaders leaders={props.leaders} />
                     </Media>
                 </div>
             </div>
