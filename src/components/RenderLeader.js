@@ -2,9 +2,7 @@ import React from 'react';
 import { Media } from 'reactstrap';
 
 function RenderLeaders({leaders}) {
-    //console.log('In RenderCard, item name is: ' + item.description);
     const leaderSection = leaders.map(leader => {
-        //console.log('key is: ' + comment.comment);
         return (
             <div className="row">
                 <Media>
