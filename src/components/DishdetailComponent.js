@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import {Link} from 'react-router-dom';
 
-   function RenderComments({comments}) {
+   function RenderComments({comments, addComment, dishId}) {
         if (comments != null) {
             console.log('In renderComment, comments is: ' + comments.name); 
             const commentsSection = comments.map(comment => {
@@ -17,10 +17,12 @@ import {Link} from 'react-router-dom';
                     </div>
                 );
             });
+            
           return (
              <div>
                 <h4>Comments</h4>
                {commentsSection}
+               <CommentForm dishId={dishId} addComment={addComment} />
              </div>
          )
     }
@@ -33,7 +35,7 @@ import {Link} from 'react-router-dom';
         
     };
     
-    
+
 
     function RenderDish({dish}) {
         
@@ -73,7 +75,9 @@ import {Link} from 'react-router-dom';
                 </div>
                 <div className="row">
                     <RenderDish dish={props.dish}/>
-                    <RenderComments comments={props.comments}/>
+                    <RenderComments comments={props.comments}
+                        addComment={props.addComment}
+                        dishId={props.dish.id}/>
                 </div>
             </div>
         );
@@ -85,6 +89,37 @@ import {Link} from 'react-router-dom';
         }
       }
 
+      class CommentForm extends Component {
+          constructor(props) {
+              super(props);
+              this.toggleModal = this.toggleModal.bind(this);
+              this.handleSubmit = this.handleSubmit.bind(this);
+
+              this.state = {
+                  isNavOpen: false,
+                  isModalOpen: false
+              };
+          }
+
+          toggleModal(){
+            this.setState({
+                isModalOpen: !this.state.isModalOpen
+            });
+        }
+    
+        handleSubmit(values) {
+            this.toggleModal();
+            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        }
+
+        render() {
+            return (
+                <div>
+                    <button outline onClick={this.toggleModal}>Submit Comment </button>
+                </div>
+            )
+        }
+      };
 
 
 export default DishDetail;
