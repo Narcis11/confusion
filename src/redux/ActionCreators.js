@@ -1,4 +1,6 @@
 import * as ActionTypes from './ActionTypes';
+import {DISHES} from '../shared/dishes';
+import { dispatch } from 'rxjs/internal/observable/range';
 
 
 export const addComment = (dishId, rating, author, comment) => ({
@@ -10,3 +12,25 @@ export const addComment = (dishId, rating, author, comment) => ({
         comment: comment
     }
 });
+
+export const fetchDishes = () => (displatch) => {
+    dispatch(dishesLoading(true));
+
+    setTimeout(() => {
+        dispatch(addDishes(DISHES));
+    }, 200);
+}
+
+export const dishesLoading = () => ({
+    type: ActionTypes.DISHES_LOADING
+});
+
+export const dishesFailed = (errmess) => ({
+    type: ActionTypes.DISHES_FAILED,
+    payload: errmess
+});
+
+export const addDishes = (dishes) => ({
+    type: ActionTypes.ADD_DISHES,
+    payload: dishes
+})
