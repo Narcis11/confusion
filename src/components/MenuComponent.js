@@ -2,19 +2,19 @@ import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {Loading} from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderMenuItem({dish, onClick}) {
   return(
     <Card>
       <Link to={`/menu/${dish.id}`}>
-        <CardImg width="100%" object src={dish.image} alt={dish.name} />
+        <CardImg width="100%" object src={baseUrl + dish.image} alt={dish.name} />
         <CardImgOverlay>
           <CardTitle>{dish.name}</CardTitle>
         </CardImgOverlay>
       </Link>
     </Card>
   );
-
 }
 //this is another way of declaring a function (e.g. like renderMenuItem)
 const Menu = (props) => {

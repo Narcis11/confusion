@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Control, LocalForm, Errors } from "react-redux-form";
 import {Link} from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
 import {
     Card,
     CardImg,
@@ -64,7 +65,7 @@ import {Loading} from './LoadingComponent';
           console.log('In renderDish, dish is: ' + dish.name);
           return (
             <Card>
-              <CardImg width="100%" object src={dish.image} alt={dish.name} />
+              <CardImg width="100%" object src={baseUrl + dish.image} alt={dish.name} />
               <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
