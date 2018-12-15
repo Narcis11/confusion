@@ -1,45 +1,70 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
-import DishDetail from './DishdetailComponent';
+import React from 'react';
+import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {Link} from 'react-router-dom';
+import {Loading} from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
-class Menu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedDish: null,
-            selectedComments: []
-        }
-    }
-
-    onDishSelect(dish) {
-      //console.log('***In onDishSelect, comments is: ' + dish.comments.comment );
-      this.setState({ selectedDish: dish});
-    }
-
-    render() {
-        const menu = this.props.dishes.map((dish) => {
-            return (
-              <div key={dish.id} className="col-12 col-md-5 m-1">
-                <Card onClick={() => this.onDishSelect(dish)}>
-                    <CardImg width="100%" object src={dish.image} alt={dish.name} />
-                    <CardImgOverlay>
-                      <CardTitle>{dish.name}</CardTitle>
-                    </CardImgOverlay>
-                </Card>
-              </div>
-            );
-        });
-
+function RenderMenuItem({dish, onClick}) {
+  return(
+    <Card>
+      <Link to={`/menu/${dish.id}`}>
+        <CardImg width="100%" object src={baseUrl + dish.image} alt={dish.name} />
+        <CardImgOverlay>
+          <CardTitle>{dish.name}</CardTitle>
+        </CardImgOverlay>
+      </Link>
+    </Card>
+  );
+}
+//this is another way of declaring a function (e.g. like renderMenuItem)
+const Menu = (props) => {
+      const menu = props.dishes.dishes.map((dish) => {
         return (
-          <div className="container">
-            <div className="row">
-                  {menu}
-            </div>
-            <DishDetail selectedDish={this.state.selectedDish}/>
-            
+          <div key={dish.id} className="col-12 col-md-5 m-1">
+            <RenderMenuItem dish={dish} />
           </div>
         );
+    });
+
+    if (props.dishes.isLoading) {
+      return(
+        <div className="container">
+            <div className="row">
+                <Loading />
+            </div>
+        </div>
+    )
+  }
+    else if (props.dishes.errMess) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>{props.dishes.errMess}</h4>
+                </div>
+            </div>
+        )
     }
+    else {
+      return (
+        <div className="container">
+          <div className="row">
+            <Breadcrumb>
+              <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+              <BreadcrumbItem active>Menu</BreadcrumbItem>
+            </Breadcrumb>
+            <div className="col-12">
+              <h3>Menu</h3>
+              <hr />
+            </div>
+          </div>
+          <div className="row">
+                {menu}
+          </div>
+          
+        </div>
+      );
+    }
+    
 }
 
 export default Menu;
